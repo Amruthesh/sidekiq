@@ -100,6 +100,12 @@ module Sidekiq
 
     def retrieve_work
       work = Sidekiq.redis { |conn| conn.brpop(*queues_cmd) }
+      unless work.nil?
+        payload_string = work[1]
+        jid_index = payload_string.index("jid")
+        jid = payload_string[jid_index..(jid_index+43)]
+        Sidekiq.logger.info "** -->> -->> Job picked up :: " + jid.to_s
+      end
       UnitOfWork.new(*work) if work
     end
 
