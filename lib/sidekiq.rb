@@ -16,7 +16,7 @@ module Sidekiq
   DEFAULTS = {
     queues: [],
     labels: [],
-    concurrency: 25,
+    concurrency: 1,
     require: '.',
     environment: nil,
     timeout: 8,
