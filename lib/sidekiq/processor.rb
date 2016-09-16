@@ -58,6 +58,7 @@ module Sidekiq
         # we didn't properly finish it.
         ack = false
       rescue Exception => ex
+        Sidekiq.logger.info "Exception_Raised:: #{ex.inspect}"
         handle_exception(ex, msg || { :message => msgstr })
         raise
       ensure
