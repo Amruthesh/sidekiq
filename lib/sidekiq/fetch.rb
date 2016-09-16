@@ -99,7 +99,7 @@ module Sidekiq
     end
 
     def retrieve_work
-      Sidekiq.logger.debug "--------------- " + Sidekiq.redis{|conn| conn.llen(queues_cmd.first)}.to_s
+      Sidekiq.logger.info "--------------- " + Sidekiq.redis{|conn| conn.llen(queues_cmd.first)}.to_s
       work = nil#Sidekiq.redis { |conn| conn.brpop(*queues_cmd) }
       unless work.nil?
         payload_string = work[1]
