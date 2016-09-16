@@ -99,6 +99,7 @@ module Sidekiq
     end
 
     def retrieve_work
+      Sidekiq.logger.info Sidekiq.redis{|conn| conn.lrange(*queues_cmd, 0, -1)}
       work = Sidekiq.redis { |conn| conn.brpop(*queues_cmd) }
       unless work.nil?
         payload_string = work[1]
