@@ -101,6 +101,7 @@ module Sidekiq
     def retrieve_work
       Sidekiq.logger.info "--------------- " + Sidekiq.redis{|conn| conn.llen(queues_cmd.first)}.to_s
       work = Sidekiq.redis { |conn| conn.brpop(*queues_cmd) }
+      Sidekiq.logger.info "--------------- " + Sidekiq.redis{|conn| conn.llen(queues_cmd.first)}.to_s
       unless work.nil?
         payload_string = work[1]
         jid_index = payload_string.index("jid")
